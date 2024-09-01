@@ -15,6 +15,7 @@ user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
 def check_jobs(driver):
     # Navigate to the page
     driver.get(SCRAPE_URL)
+    print(f"Currently parsing: {driver.current_url}")
 
     # Let the page load completely
     driver.implicitly_wait(10)  # Waits for 10 seconds
