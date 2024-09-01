@@ -36,14 +36,6 @@ jobs:
         sudo chmod +x /usr/local/bin/chromedriver
         chromedriver --version
 
-    - name: Install ChromeDriver
-      run: |
-        wget https://chromedriver.storage.googleapis.com/$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/local/bin/chromedriver
-        sudo chmod +x /usr/local/bin/chromedriver
-        chromedriver --version
-
     - name: Run the Job Alert Bot
       env:
         SCRAPE_URL: ${{ secrets.SCRAPE_URL }}
