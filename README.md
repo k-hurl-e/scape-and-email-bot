@@ -17,6 +17,8 @@ You can install all the dependencies using pip:
 pip install -r requirements.txt
 ```
 
+Currently configured to run with [Mailgun](https://www.mailgun.com/). Simply change the GitHub Secret varaibles to your Mailgun Domain and Email Address.
+
 ## Configuration
 
 The bot is configured via the `main.yml` file. This YAML file allows you to define:
