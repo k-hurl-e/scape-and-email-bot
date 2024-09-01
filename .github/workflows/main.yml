@@ -13,6 +13,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Install Python and Pip
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3 python3-pip
+        python3 --version
+        pip3 --version
+
     - name: Run Job Alert Bot in Docker
       uses: docker://selenium/standalone-chrome:latest
       with:
