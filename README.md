@@ -51,7 +51,3 @@ The bot is configured via the `main.yml` file. This YAML file allows you to defi
 5. (Optional) Set up a cron job to run the bot automatically at the specified intervals.
 
 If you want to adjust the parameters, simple change the `SCRAPE_URL` with a link that includes all your criteria and adjust the `title`, `link`, `company`, and `description` criteria in `runbot.py` to match the websites HTML. 
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
