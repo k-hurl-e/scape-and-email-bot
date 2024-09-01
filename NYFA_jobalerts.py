@@ -15,10 +15,13 @@ user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
 def check_jobs(driver):
     # Navigate to the page
     driver.get(SCRAPE_URL)
-    print(f"Currently parsing: {driver.current_url}")
 
     # Let the page load completely
     driver.implicitly_wait(10)  # Waits for 10 seconds
+
+    # Print the original and current URLs to the log
+    print(f"Original URL: {url}")
+    print(f"Final URL after any redirects: {driver.current_url}")
 
     # Parse the fully loaded page with BeautifulSoup
     soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -66,7 +69,7 @@ def main():
     driver = webdriver.Chrome(options=options)
 
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    
+
     job_alert = check_jobs(driver)
     if job_alert:
         # Combine all job results into a single email body
@@ -75,7 +78,7 @@ def main():
         print(f"Email sent! Status code: {response.status_code}, Response: {response.text}")
     else:
         print("No matching job found.")
-    
+
     driver.quit()
 
 if __name__ == "__main__":
