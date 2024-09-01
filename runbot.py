@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import requests
+from datetime import datetime, timedelta
 import os
 
 SCRAPE_URL = 'https://www.nyfa.org/jobs/?JobQ=Marketing&location=New+York%2C+NY&salary=60000%2Cinf'
@@ -37,15 +38,29 @@ def check_jobs(driver):
 
     job_results = []
 
+    # Define today's date, yesterday, and the day before
+    today = datetime.today().strftime('%m/%d/%Y')
+    yesterday = (datetime.today() - timedelta(days=1)).strftime('%m/%d/%Y')
+    day_before_yesterday = (datetime.today() - timedelta(days=2)).strftime('%m/%d/%Y')
+
     for job in jobs:
         title = job.find('h3').text if job.find('h3') else "No title"
         link = job.find('a').get('href', "No link")
         company = job.find('b', class_='nyfa-orange-color').text if job.find('b') else "No company"
-        description = job.find('div', class_='grey').text.strip() if job.find('div', class_='grey') else "No description"
-        print(job)
-        job_results.append(f"Title: {title}\nCompany: {company}\nDescription: {description}\nLink: nyfa.org{link}")
-    
+        description_block = job.find('div', class_='grey').text.strip() if job.find('div', class_='grey') else "No description"
+        
+        # Split the block into individual components
+        description_parts = description_block.split('|')
+        date = description_parts[0].strip() if len(description_parts) > 0 else "No date"
+        location = description_parts[1].strip() if len(description_parts) > 1 else "No location"
+        job_type = description_parts[2].strip() if len(description_parts) > 2 else "No job type"
+        
+        # Only add jobs where the date matches today, yesterday, or the day before
+        if date in [today, yesterday, day_before_yesterday]:
+            job_results.append(f"Title: {title}\nCompany: {company}\nDate: {date}\nLocation: {location}\nType: {job_type}\nLink: nyfa.org{link}")
+
     return job_results
+
 
 # Function to send email using Mailgun
 def send_email(subject, body):
