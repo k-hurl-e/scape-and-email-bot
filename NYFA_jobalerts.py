@@ -4,6 +4,12 @@ from bs4 import BeautifulSoup
 import requests
 import os
 
+scrape_url = os.getenv('SCRAPE_URL')
+api_key = os.getenv('API_KEY')
+mailgun_domain = os.getenv('MAILGUN_DOMAIN')
+email_sender = os.getenv('EMAIL_SENDER')
+email_recipient = os.getenv('EMAIL_RECIPIENT')
+
 def check_jobs(driver):
     # Navigate to the page
     driver.get(SCRAPE_URL)
