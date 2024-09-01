@@ -24,9 +24,10 @@ jobs:
         pip install -r requirements.txt
 
     - name: Set up ChromeDriver
-      uses: nanasess/setup-chromedriver@v1
-      with:
-        chrome-version: 'latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y chromium-chromedriver
+
 
     - name: Run the Job Alert Bot
       env:
