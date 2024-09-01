@@ -20,8 +20,6 @@ def check_jobs(driver):
     # Parse the fully loaded page with BeautifulSoup
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
-    print(soup)
-
     # Find all job postings (adjust the class name based on the actual HTML structure)
     jobs = soup.find_all('div', class_="RegularJob")  # Adjust this selector if necessary
 
