@@ -32,13 +32,14 @@ def check_jobs(driver):
         description = job.find('div', class_='grey').text.strip() if job.find('div', class_='grey') else "No description"
 
         job_results.append(f"Title: {title}\nCompany: {company}\nDescription: {description}\nLink: nyfa.org{link}")
-        
+    
+    print(job_results)    
     return job_results
 
 # Function to send email using Mailgun
 def send_email(subject, body):
     return requests.post(
-        f"https://api.mailgun.net/v3/{domain}/messages",
+        f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages",
         auth=("api", API_KEY),
         data={"from": EMAIL_SENDER,
               "to": [EMAIL_RECIPIENT],
@@ -52,7 +53,6 @@ def main():
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.binary_location = "/usr/bin/google-chrome"  # Specify the path to the Chrome binary
-
 
     driver = webdriver.Chrome(options=options)
     
