@@ -30,15 +30,14 @@ def check_jobs(driver):
         link = job.find('a')['href'] if job.find('a') else "No link"
         company = job.find('b', class_='nyfa-orange-color').text if job.find('b') else "No company"
         description = job.find('div', class_='grey').text.strip() if job.find('div', class_='grey') else "No description"
-
+        print(job)
         job_results.append(f"Title: {title}\nCompany: {company}\nDescription: {description}\nLink: nyfa.org{link}")
     
     
-    
-    if "nyfa.org" in SCRAPE_URL:
-        print("correct")
+    if jobs:
+        print('these are jobs:' jobs)
     else:
-        print("no")    
+        print('no') 
     return job_results
 
 # Function to send email using Mailgun
