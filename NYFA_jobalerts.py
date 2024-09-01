@@ -37,16 +37,11 @@ def check_jobs(driver):
 
 # Function to send email using Mailgun
 def send_email(subject, body):
-    api_key = os.getenv("API_KEY")  # Use environment variables
-    domain = os.getenv("MAILGUN_DOMAIN")
-    sender = os.getenv("EMAIL_SENDER")
-    recipient = os.getenv("EMAIL_RECIPIENT")
-
     return requests.post(
         f"https://api.mailgun.net/v3/{domain}/messages",
-        auth=("api", api_key),
-        data={"from": sender,
-              "to": [recipient],
+        auth=("api", API_KEY),
+        data={"from": EMAIL_SENDER,
+              "to": [EMAIL_RECIPIENT],
               "subject": subject,
               "text": body})
 
