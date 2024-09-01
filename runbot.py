@@ -22,10 +22,6 @@ def check_jobs(driver):
 
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'RegularJob')))
 
-
-    # Let the page load completely
-    # driver.implicitly_wait(10) 
-
     current_url = driver.execute_script("return window.location.href")
     print(f"Currently parsing: {current_url}")
 
@@ -54,7 +50,7 @@ def check_jobs(driver):
         date = description_parts[0].strip() if len(description_parts) > 0 else "No date"
         location = description_parts[1].strip() if len(description_parts) > 1 else "No location"
         job_type = description_parts[2].strip() if len(description_parts) > 2 else "No job type"
-        
+        print(f"today: {today}, job date: {date}")
         # Only add jobs where the date matches today, yesterday, or the day before
         if date in [today, yesterday, day_before_yesterday]:
             job_results.append(f"Title: {title}\nCompany: {company}\nDate: {date}\nLocation: {location}\nType: {job_type}\nLink: nyfa.org{link}")
