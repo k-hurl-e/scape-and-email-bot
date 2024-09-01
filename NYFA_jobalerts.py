@@ -10,6 +10,8 @@ MAILGUN_DOMAIN = os.getenv('MAILGUN_DOMAIN')
 EMAIL_SENDER = os.getenv('EMAIL_SENDER')
 EMAIL_RECIPIENT = os.getenv('EMAIL_RECIPIENT')
 
+user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.179 Safari/537.36"
+
 def check_jobs(driver):
     # Navigate to the page
     driver.get(SCRAPE_URL)
@@ -33,11 +35,6 @@ def check_jobs(driver):
         print(job)
         job_results.append(f"Title: {title}\nCompany: {company}\nDescription: {description}\nLink: nyfa.org{link}")
     
-    
-    if jobs:
-        print(jobs)
-    else:
-        print('no') 
     return job_results
 
 # Function to send email using Mailgun
@@ -57,6 +54,7 @@ def main():
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.binary_location = "/usr/bin/google-chrome"  # Specify the path to the Chrome binary
+    options.add_argument(f"user-agent={user_agent}")
 
     driver = webdriver.Chrome(options=options)
     
