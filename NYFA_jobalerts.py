@@ -19,9 +19,8 @@ def check_jobs(driver):
     # Let the page load completely
     driver.implicitly_wait(10)  # Waits for 10 seconds
 
-    # Print the original and current URLs to the log
-    print(f"Original URL: {url}")
-    print(f"Final URL after any redirects: {driver.current_url}")
+    current_url = driver.execute_script("return window.location.href")
+    print(f"Currently parsing: {current_url}")
 
     # Parse the fully loaded page with BeautifulSoup
     soup = BeautifulSoup(driver.page_source, 'html.parser')
