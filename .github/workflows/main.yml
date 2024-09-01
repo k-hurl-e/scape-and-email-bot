@@ -20,7 +20,6 @@ jobs:
           sh -c "pip install -r requirements.txt &&
                  python NYFA_jobalerts.py"
       env:
-        SCRAPE_URL: ${{ secrets.SCRAPE_URL }}
         API_KEY: ${{ secrets.API_KEY }}
         MAILGUN_DOMAIN: ${{ secrets.MAILGUN_DOMAIN }}
         EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
