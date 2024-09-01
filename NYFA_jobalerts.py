@@ -33,6 +33,7 @@ def check_jobs(driver):
 
         job_results.append(f"Title: {title}\nCompany: {company}\nDescription: {description}\nLink: nyfa.org{link}")
     
+    print(SCRAPE_URL)
     print(job_results)    
     return job_results
 
