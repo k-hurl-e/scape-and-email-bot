@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import requests
 import os
@@ -16,8 +19,11 @@ def check_jobs(driver):
     # Navigate to the page
     driver.get(SCRAPE_URL)
 
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'RegularJob')))
+
+
     # Let the page load completely
-    driver.implicitly_wait(10)  # Waits for 10 seconds
+    # driver.implicitly_wait(10) 
 
     current_url = driver.execute_script("return window.location.href")
     print(f"Currently parsing: {current_url}")
@@ -26,16 +32,14 @@ def check_jobs(driver):
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
     # Find all job postings (adjust the class name based on the actual HTML structure)
-    # jobs = soup.find_all('div', class_="RegularJob")  
-    jobs = soup.find_all('div')
-
-    print(soup)
+    jobs = soup.find_all('div', class_="RegularJob")  
+    # jobs = soup.find_all('div')
 
     job_results = []
 
     for job in jobs:
         title = job.find('h3').text if job.find('h3') else "No title"
-        link = job.find('a')['href'] if job.find('a') else "No link"
+        link = job.find('a').get('href', "No link")
         company = job.find('b', class_='nyfa-orange-color').text if job.find('b') else "No company"
         description = job.find('div', class_='grey').text.strip() if job.find('div', class_='grey') else "No description"
         print(job)
