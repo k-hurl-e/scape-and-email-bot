@@ -17,39 +17,22 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
-
-    - name: Install Google Chrome
+    
+    - name: Install Google Chrome (Specific Version)
       run: |
         sudo apt-get update
         sudo apt-get install -y wget unzip
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo apt install -y ./google-chrome-stable_current_amd64.deb
+        wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.90-1_amd64.deb
+        sudo apt install -y ./google-chrome-stable_114.0.5735.90-1_amd64.deb
         google-chrome --version
 
-    - name: Install ChromeDriver
+    - name: Install ChromeDriver (Matching Version)
       run: |
-        # Extract the Chrome version and log it for debugging
-        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-        echo "Detected Chrome version: $CHROME_VERSION"
-        
-        # Try to get the corresponding ChromeDriver version
-        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
-        
-        # Debugging: log the ChromeDriver version or an error message
-        if [ -z "$CHROMEDRIVER_VERSION" ]; then
-          echo "Failed to retrieve ChromeDriver version for Chrome $CHROME_VERSION. Falling back to the latest version."
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
-        else
-          echo "Detected ChromeDriver version: $CHROMEDRIVER_VERSION"
-        fi
-        
-        # Download and install ChromeDriver
-        wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
+        wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/local/bin/chromedriver
         sudo chmod +x /usr/local/bin/chromedriver
         chromedriver --version
-
 
     - name: Run the Job Alert Bot
       env:
