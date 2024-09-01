@@ -13,41 +13,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Run Job Alert Bot in Docker
+      uses: docker://selenium/standalone-chrome:latest
       with:
-        python-version: '3.9'
-    
-    - name: Install Google Chrome (Latest Stable)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y wget unzip
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo apt install -y ./google-chrome-stable_current_amd64.deb
-        google-chrome --version
-
-    - name: Install ChromeDriver (Latest Matching Version)
-      run: |
-        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-        echo "Detected Chrome version: $CHROME_VERSION"
-        # Get the latest ChromeDriver version that matches the installed Chrome version
-        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
-        if [ -z "$CHROMEDRIVER_VERSION" ]; then 
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
-        fi
-        wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/local/bin/chromedriver
-        sudo chmod +x /usr/local/bin/chromedriver
-        chromedriver --version
-
-
-    - name: Run the Job Alert Bot
+        args: >
+          sh -c "pip install -r requirements.txt &&
+                 python NYFA_jobalerts.py"
       env:
         SCRAPE_URL: ${{ secrets.SCRAPE_URL }}
         API_KEY: ${{ secrets.API_KEY }}
         MAILGUN_DOMAIN: ${{ secrets.MAILGUN_DOMAIN }}
         EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
         EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
-      run: |
-        python NYFA_jobalerts.py
