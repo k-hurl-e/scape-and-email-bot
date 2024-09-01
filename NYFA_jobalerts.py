@@ -35,7 +35,7 @@ def check_jobs(driver):
     
     
     if jobs:
-        print('these are jobs:' jobs)
+        print(jobs)
     else:
         print('no') 
     return job_results
