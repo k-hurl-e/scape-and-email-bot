@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import os
 
-SCRAPE_URL = os.getenv('SCRAPE_URL')
+SCRAPE_URL = 'https://www.nyfa.org/jobs/?JobQ=Marketing&location=New+York%2C+NY&salary=60000%2Cinf'
 API_KEY = os.getenv('API_KEY')
 MAILGUN_DOMAIN = os.getenv('MAILGUN_DOMAIN')
 EMAIL_SENDER = os.getenv('EMAIL_SENDER')
