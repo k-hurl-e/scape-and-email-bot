@@ -12,7 +12,7 @@ EMAIL_RECIPIENT = os.getenv('EMAIL_RECIPIENT')
 
 def check_jobs(driver):
     # Navigate to the page
-    driver.get(SCRAPE_URL)
+    driver.get('https://www.nyfa.org/jobs/?JobQ=Marketing&location=New+York%2C+NY&salary=60000%2Cinf')
 
     # Let the page load completely
     driver.implicitly_wait(10)  # Waits for 10 seconds
