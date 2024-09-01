@@ -12,13 +12,15 @@ EMAIL_RECIPIENT = os.getenv('EMAIL_RECIPIENT')
 
 def check_jobs(driver):
     # Navigate to the page
-    driver.get('https://www.nyfa.org/jobs/?JobQ=Marketing&location=New+York%2C+NY&salary=60000%2Cinf')
+    driver.get('SCRAPE_URL')
 
     # Let the page load completely
     driver.implicitly_wait(10)  # Waits for 10 seconds
 
     # Parse the fully loaded page with BeautifulSoup
     soup = BeautifulSoup(driver.page_source, 'html.parser')
+
+    print(soup)
 
     # Find all job postings (adjust the class name based on the actual HTML structure)
     jobs = soup.find_all('div', class_="RegularJob")  # Adjust this selector if necessary
