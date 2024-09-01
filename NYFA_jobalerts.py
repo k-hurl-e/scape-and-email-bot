@@ -33,9 +33,12 @@ def check_jobs(driver):
 
         job_results.append(f"Title: {title}\nCompany: {company}\nDescription: {description}\nLink: nyfa.org{link}")
     
-    testurl = SCRAPE_URL
-    print(testurl)
-    print(job_results)    
+    
+    
+    if "nyfa.org" in SCRAPE_URL:
+        print("correct")
+    else:
+        print("no")    
     return job_results
 
 # Function to send email using Mailgun
